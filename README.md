@@ -21,9 +21,9 @@ sudo docker-compose -f docker-compose-deploy.yml up
 
 
 To pull it directly from my dockerhub for deployment:
-download docker-compose-deploy-from-dockerhub.yml
-sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull
-sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up
+	download docker-compose-deploy-from-dockerhub.yml
+	sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull
+	sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up
 
 app is runing with nginx as proxy:
 
