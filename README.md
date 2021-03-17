@@ -3,34 +3,35 @@ Simple Api with django containing database with car and rating models.
 Link to public host:
 	ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080/
 
-Rember without: "https://"
+Rember without: "https://" 
 
-For avaliable links go to: 'help/'
+For avaliable links go to: 'help/'  
 
 -------------------------------RUNNING APP locally-------------------------------------
 
-To run it locally for debug mode: 
-git clone this-repository
-sudo docker-compose build
-sudo docker-compose up
+To run it locally for debug mode:/ 
+git clone this-repository/
+sudo docker-compose build/
+sudo docker-compose up/
+/
 
-To run it locally deployment version using files:
-git clone this-repository
-sudo docker-compose -f docker-compose-deploy.yml build
-sudo docker-compose -f docker-compose-deploy.yml up
+To run it locally deployment version using files:/
+git clone this-repository/
+sudo docker-compose -f docker-compose-deploy.yml build/
+sudo docker-compose -f docker-compose-deploy.yml up/
 
 
-To pull it directly from my dockerhub for deployment:
-download docker-compose-deploy-from-dockerhub.yml
-sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull
-sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up
+To pull it directly from my dockerhub for deployment:/
+download docker-compose-deploy-from-dockerhub.yml/
+sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull/
+sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up/
 
-app is runing with nginx as proxy:
-
-container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi
-container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy
-
-Or for debug mode using virtual env:
+app is runing with nginx as proxy:/
+/
+container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi/
+container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy/
+/
+Or for debug mode using virtual env:/
 
 	python -m venv env
 
@@ -40,31 +41,31 @@ Or for debug mode using virtual env:
 
 	pip install -r requirements.txt
 
-	for tests:
-	python manage.py test myapp/
+	
+	python manage.py test myapp/ #for tests
 
 	python manage.py runserver
 	
 	
 
-For running with python manage.py runserver - emember to add in app/myapi/settings.py option DEBUG=1.
-This app is prepared for deployment,
-I added DEBUG=1 to environment values in docker-compose.yml file.
-To run it via python manage.py runserver that value need to be set.
+For running with python manage.py runserver - emember to add in app/myapi/settings.py/ option DEBUG=1./
+This app is prepared for deployment,/
+I added DEBUG=1 to environment values in docker-compose.yml file./
+To run it via python manage.py runserver that value need to be set./
 
-------------------------------------Short description-----------------------------------
-Application containing models of Cars and Ratings.
+------------------------------------Short description-----------------------------------/
+Application containing models of Cars and Ratings./
 
-Car:
-    make = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
+Car:/
+    make = models.CharField(max_length=100)/
+    model = models.CharField(max_length=100)/
+/
+Rating:/
+    Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)/
+    rates_number = models.IntegerField(blank=True, null=True)/
+    rates_sum = models.IntegerField(blank=True, null=True)/
 
-Rating:
-    Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)
-    rates_number = models.IntegerField(blank=True, null=True)
-    rates_sum = models.IntegerField(blank=True, null=True)
-
-Catalogue:
+Catalogue:/
     make=models.CharField(max_length=100)
     available_models=models.CharField(max_length=10000)
 
