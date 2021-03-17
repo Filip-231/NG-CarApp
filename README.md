@@ -10,24 +10,25 @@ For avaliable links go to: 'help/'
 -------------------------------RUNNING APP locally-------------------------------------
 
 To run it locally for debug mode: 
-	git clone this-repository
-	sudo docker-compose build
-	sudo docker-compose up
+git clone this-repository
+sudo docker-compose build
+sudo docker-compose up
 
 To run it locally deployment version using files:
-	git clone this-repository
-	sudo docker-compose -f docker-compose-deploy.yml build
-	sudo docker-compose -f docker-compose-deploy.yml up
+git clone this-repository
+sudo docker-compose -f docker-compose-deploy.yml build
+sudo docker-compose -f docker-compose-deploy.yml up
 
 
 To pull it directly from my dockerhub for deployment:
-	download docker-compose-deploy-from-dockerhub.yml
-	sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull
-	sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up
+download docker-compose-deploy-from-dockerhub.yml
+sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull
+sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up
 
 app is runing with nginx as proxy:
-	container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi
-	container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy
+
+container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi
+container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy
 
 Or for debug mode using virtual env:
 
@@ -46,8 +47,10 @@ Or for debug mode using virtual env:
 	
 	
 
-	remember to add in app/myapi/settings.py option DEBUG=1
-	i normally added it in docker-compose.yml file
+For running with python manage.py runserver - emember to add in app/myapi/settings.py option DEBUG=1.
+This app is prepared for deployment,
+I added DEBUG=1 to environment values in docker-compose.yml file.
+To run it via python manage.py runserver that value need to be set.
 
 ------------------------------------Short description-----------------------------------
 Application containing models of Cars and Ratings.
