@@ -1,2 +1,7 @@
 env/
 Key.pem
+app/.vscode/
+app/.ipynb_checkpoints/
+app/myapp/migrations/
+app/myapp/__pycache__/
+app/myapi/__pycache__/
