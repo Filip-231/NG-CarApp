@@ -9,9 +9,26 @@ class Car(models.Model):
     class Meta:
         unique_together = ('make', 'model',)
 
+    @property
+    def avg_rating(self):
+        """Counting average rating value for specific car"""
+
+        rating=self.rating_set.first()#I take first  kind of rating
+        avg_rating = 0.0
+        if(rating.rates_number > 0):
+            avg_rating = round(rating.rates_sum/rating.rates_number, 1)
+        return(avg_rating)
+    
+    @property
+    def rates_number(self):
+        return self.rating_set.first().rates_number
+
 
 class Rating(models.Model):
-    """ Model containing rating for each car """
+    """ Model containing rating for each car
+    I decided to make many to one relation, because after scalling up the application,
+    each car can get more kinds of ratings, 
+    for example online rating, customer rating, production rating """
     Car= models.ForeignKey(Car, blank=True, null=True,
                             on_delete=models.CASCADE)
     # car_parent=models.OneToOneField(
