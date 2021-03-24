@@ -6,9 +6,6 @@ services:
       context: .
     volumes:
       - static_data:/vol/web
-    environment:
-      - SECRET_KEY=samplesecret123
-      - ALLOWED_HOSTS=127.0.0.1,localhost,ec2-54-246-230-82.eu-west-1.compute.amazonaws.com
     image: filip231/projectmyapi
 
   proxy:

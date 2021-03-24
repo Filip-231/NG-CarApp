@@ -20,11 +20,20 @@ git clone this-repository
 sudo docker-compose -f docker-compose-deploy.yml build  
 sudo docker-compose -f docker-compose-deploy.yml up  
 
+Warning: In that case you need to set locally environment variables:  
+- SECRET_KEY= #random key  
+- ALLOWED_HOSTS= #hosts which use application  
+
 
 To pull it directly from my dockerhub for deployment:  
 download docker-compose-deploy-from-dockerhub.yml  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up  
+
+Warning: In that case you need to set locally environment variables:  
+- SECRET_KEY= #random key  
+- ALLOWED_HOSTS= #hosts which use application  
+
 
 app is runing with nginx as proxy:    
   

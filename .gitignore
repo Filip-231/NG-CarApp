@@ -3,7 +3,8 @@ env\ old/
 Key.pem
 app/.vscode/
 app/.ipynb_checkpoints/
-app/myapp/migrations/
+not/app/myapp/migrations/
 app/myapp/__pycache__/
 app/myapi/__pycache__/
 app/myapp/viewsraw.py
+notes/

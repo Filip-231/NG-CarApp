@@ -5,7 +5,7 @@ from .models import Car, Rating
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model =Rating
-        fields="Car", "rates_number","rates_sum"
+        fields="id","Car","value" 
 
 
 class CarSerializer(serializers.ModelSerializer):

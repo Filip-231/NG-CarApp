@@ -1,34 +1,33 @@
+from collections import OrderedDict
 from django.test import TestCase, Client
 from myapp.models import Car, Rating
 from myapp.views import create_car, update_rating
 import json
 import requests
 import random as r
-from collections import OrderedDict
 
-def generate_order(test_makes_models):
+
+# python manage.py test myapp/
+
+def get_sample(test_makes_models):
     """Generating random ordered dict from given dict with test_makes_models"""
     order_input = OrderedDict()
-
-    i = r.randint(0, len(test_makes_models.keys()))
-
-    for make in r.sample(list(test_makes_models), i):
-
+    
+    i = r.randint(0, len(test_makes_models))
+    for make in r.sample(test_makes_models.keys(), i):
         models = test_makes_models[make]
-
-        models = r.sample(list(models), r.randint(0, len(models)))
+        models = r.sample(models, r.randint(0, len(models)))
 
         if models:
             order_input[make] = models
-
-    return (order_input)
+            
+    return order_input
 
 
 def generate_random_database(order_input):
     """Given random order_input generate database"""
-    for make in order_input.keys():
-        print(make)
-        for model in order_input[make]:
+    for make, models in order_input.items():
+        for model in models:
             print("Adding car with make: {} model: {}.".format(make, model))
             create_car(make, model)
 
@@ -37,8 +36,8 @@ def retrive_wanted_response(order_input):
     """Retriving proper server answer after adding cars from ordered dict"""
     id_num = 1
     wanted_response = []
-    for make in order_input.keys():
-        for model in order_input[make]:
+    for make, models in order_input.items():
+        for model in models:
             wanted_response.append({
                 "id": id_num,
                 "make": make,
@@ -50,6 +49,39 @@ def retrive_wanted_response(order_input):
     return wanted_response
 
 
+def rate_random_cars(wanted_response,
+                     max_number_of_randomly_generated_rates_per_car, test):
+    rate_trace = {}
+    random_number_cars_rated = r.randint(1, len(wanted_response))
+    random_cars_ids = r.sample(range(1,
+                                     len(wanted_response) + 1),
+                               random_number_cars_rated)
+
+    for random_id in random_cars_ids:
+        random_rates_number = r.randint(
+            1, max_number_of_randomly_generated_rates_per_car)
+
+        rate_trace[random_id] = {'sum': 0, 'count': 0}
+
+        print("Rating car with id: {} number of times: {}.".format(
+            random_id, random_rates_number))
+
+        for _ in range(0, random_rates_number):
+            random_rate = r.randint(1, 5)
+            rate_message = json.dumps({
+                "car_id": random_id,
+                "rating": random_rate
+            })
+
+            response = test.client.generic('POST', '/rate/', rate_message)
+            test.assertEqual(response.status_code, 200)
+
+            rate_trace[random_id]['sum'] += random_rate
+            rate_trace[random_id]['count'] += 1
+
+    return rate_trace
+
+
 class test_functions(TestCase):
     """
     Testing functions which creates views and updates ratings.
@@ -58,8 +90,8 @@ class test_functions(TestCase):
     def setUp(self):
         self.make1 = "Volkswagen"
         self.model1 = "Golf"
-        self.make2 = "Volkswagen"
-        self.model2 = "Passat"
+        self.make2 = "BMW"  
+        self.model2 = "M5"
 
     def test_create(self):
 
@@ -73,15 +105,16 @@ class test_functions(TestCase):
 
     def test_update_rating(self):
         #python manage.py test myapp.tests.test_functions.test_update_rating
-        create_car(self.make1, self.model1)
-        create_car(self.make2, self.model2)
-        update_rating(1, 1)
-        update_rating(1, 1)
-        update_rating(2, 5)
-        update_rating(2, 1)
+        car1_id = create_car(self.make1, self.model1)
+        car2_id = create_car(self.make2, self.model2)
 
-        avg_rating1=Car.objects.get(id=1).avg_rating
-        avg_rating2=Car.objects.get(id=2).avg_rating
+        update_rating(car1_id, 1)
+        update_rating(car1_id, 1)
+        update_rating(car2_id, 5)
+        update_rating(car2_id, 1)
+
+        avg_rating1 = Car.objects.get(id=car1_id).avg_rating
+        avg_rating2 = Car.objects.get(id=car2_id).avg_rating
 
         self.assertEqual(avg_rating1, 1.0)
         self.assertEqual(avg_rating2, 3.0)
@@ -95,130 +128,87 @@ class test_views(TestCase):
                    "BMW":{'K1', '535i/535is', '750i / ALPINA B7', 'R 100 GS', 'R 1200 GS', 'HP2', 'R 1150 RS', '650i / ALPINA B6', '640i', '733i', '335xi', '633 csi', 'M4', '328i', '328xi', 'R 1100 S', 'C 650', 'R 80 RT', 'R 1250 RS', 'K 1200 RS', 'M760i', 'K 1600 B', 'R 1200 RS', 'F 650 GS', '428i', '735i', 'M2', 'F 650 CS', 'F 900', '535d', 'F 800 GS', 'K 1600 GT', '528xi', '325i', '525iA', 'M3', 'M6', '850CSi', '530iA', '750Li', '335d', '335i', 'B7', '730i', 'X7', '228i', '323i', '525xi', '740iL', 'F 650', 'K 1300 S', '340i', '135i', '325iC', 'C 400 GT', 'R 1200 C', '440i', '330xi', 'G 310 GS', '530i', 'K 1100 RS', 'F 750 GS', '745Li', '325e', 'R 80 ST', 'S 1000 RR', 'G 450 X', '535xi', '325iS', '540iA', '640xi', 'R 100 RT', 'M5', '430i', '524td', '533i', 'F 800 ST', 'F 800 S', 'R 1250 R', 'F 800 GT', 'i3', '545i', 'R 18 Classic', 'C 400 X', 'K100', '320i', 'R 65', '750xi', 'F 800 R', '528i', 'C 600', '760i', '325iT', 'K75RT', '530iT', 'Z8', '325ix', '740e', '328iS', 'R 100', '750Li / ALPINA B7', 'R 80', 'S 1000 XR', '540i', 'R 1250 RT', 'C Evolution', 'X4', '760Li', '645Cic', 'R 1200 ST', '750iL', '325/325e', 'R 80 GS', '750Lxi / ALPINA B7', '318iS', 'F 700 GS',
                                            'K 1200 R', 'K75S', '750Lxi', '323iC', 'M850i', '435i', 'G 310 R', 'M3Cic', 'ActiveHybrid 5', '540iAT', 'X2', 'R 18', '335is', 'X5', '330Cic', 'K 1600 GTL', '325i/325is', 'i8', 'M240i', 'K 100 RT', 'R 1150 R', 'C 650 GT', 'L7', '1M', 'M340i', '328Ci', '328iC', '530e', 'M440i', 'K 1100 LT', '328d', '230i', '550i', 'R 100 CS', '325Cic', '318iC', '850i', 'S 1000 R', 'R 1100 RS', '318ti', '735iL', '335', '750i', 'F 650 S', '740Li', 'R 1100 RT', 'R nineT', '330e', '650i / B6', 'G 650', '745i', 'R 1150 RT', '530xi', 'R 1200 R', 'R 1150 GS', '525i', 'K75', 'R 100 GSPD', '745e', 'M3Ci', '535i', '330i', '645Ci', '750xi / ALPINA B7', '325xiT', 'F 850 GS', 'Z3', '645i', 'R 850 R', 'R 1200 RT', 'Active E', 'Alpina', 'K 1200 GT', 'R 1100 GS', 'X6', 'K 1200 S', '635CSi', '525iAT', 'K 1200 LT', 'R 65 LS', 'K 1300 R', 'R 1250 GS', '650xi', 'R 100 RS', '128i', 'ActiveHybrid 3', 'K 100 LT', '650i', 'K 100 RS', '318i', 'K 1300 GT', 'G 650 GS', 'R 1100 R', '840Ci', '840i', 'R 900 RT', 'M8', '325xi', 'X3', '525iT', '530xiT', '323is', '740i', '325Ci', '330Ci', '528e', 'HP4', '540d', 'M235i', 'R 1200 CL', 'M550i', 'Z4', 'R 1200 S', 'R 100 R', '750i / B7', 'X1', '850Ci'}}
 
+        #smaller data set for faster tests:
+        # self.test_makes_models={"Volkswagen": {'Euro Van', 'ID.4', 'New Jetta'},\
+        #            "Honda": {'HR-V', 'NC700XDL/NC700X', 'ST1300'},\
+        #            "BMW":{'K1', '535i/535is'}}
         
-        self.order = generate_order(self.test_makes_models)
+        self.sample = get_sample(self.test_makes_models)
         self.max_number_of_randomly_generated_rates_per_car = r.randint(0, 200)
-
 
     def test_list_cars(self):
         # python manage.py test myapp.tests.test_views.test_list_cars
-        generate_random_database(self.order)
+        generate_random_database(self.sample)
 
         response = self.client.get('/cars/')
-
         self.assertEqual(response.status_code, 200)
 
-        wanted_response = retrive_wanted_response(self.order)
-
+        wanted_response = retrive_wanted_response(self.sample)
         response = json.loads(response.content)
 
         self.assertEqual(response, wanted_response)
 
     def test_deleting_car(self):
         # python manage.py test myapp.tests.test_views.test_deleting_car
-        create_car("Volkswagen", "Golf")
-        response = self.client.generic('DELETE', '/cars/{}/'.format(1))
+        car_id=create_car("Volkswagen", "Golf")
+        response = self.client.generic(
+            'DELETE', '/cars/{}/'.format(car_id)) 
         self.assertEqual(response.status_code, 200)
         print(response.content)
 
     def test_rating_car(self):
         # python manage.py test myapp.tests.test_views.test_rating_car
-        create_car("Volkswagen", "Golf")
-        rate_message = json.dumps({"car_id": 1, "rating": 5})
+        car_id=create_car("Volkswagen", "Golf")
+        rate_message = json.dumps({"car_id": 1, "rating": car_id})  
         response = self.client.generic('POST', '/rate/', rate_message)
         self.assertEqual(response.status_code, 200)
         print(response.content)
 
-    def test_popular_cars_and_rates(self):
-        # python manage.py test myapp.tests.test_views.test_popular_cars_and_rates
-        print(
-            "\n----------- Running test_popular_cars_and_rates ------------\n \
-            \n ---------- I will generate new random database ---------- \n"
-        )
-        
-        generate_random_database(self.order)
-        wanted_response = retrive_wanted_response(self.order)
+    def test_rating_cars(self):
+        # python manage.py test myapp.tests.test_views.test_rating_cars
 
-        rate_trace = {}
+        generate_random_database(self.sample)
+        wanted_response = retrive_wanted_response(self.sample)
 
-        print(
-            "\n ---------- I will generate random rate trafic in database---------- \n"
-        )
-        if not wanted_response:
-            print(
-                "This time no traffic in database because there is no records!"
-            )
-            return
+        if not wanted_response: return  #if randomly generated empty database
 
-        random_number_cars_rated = r.randint(1, len(wanted_response))
-
-        random_cars_ids = r.sample(range(1,
-                                         len(wanted_response) + 1),
-                                   random_number_cars_rated)
-
-        for i in random_cars_ids:
-            random_id = i
-            random_rates_number = r.randint(
-                1, self.max_number_of_randomly_generated_rates_per_car)
-            rate_trace[random_id] = [0, 0]
-
-            print("Rating car with id: {} number of times: {}.".format(
-                random_id, random_rates_number))
-
-            for _ in range(0, random_rates_number):
-                random_rate = r.randint(1, 5)
-
-                rate_message = json.dumps({
-                    "car_id": random_id,
-                    "rating": random_rate
-                })
-                response = self.client.generic('POST', '/rate/', rate_message)
-
-                # print("Server response {}".format(response.content))
-                self.assertEqual(response.status_code, 200)
-                rate_trace[random_id][0] += random_rate
-                rate_trace[random_id][1] += 1
+        rate_trace = rate_random_cars(
+            wanted_response,
+            self.max_number_of_randomly_generated_rates_per_car, self)
 
         cars_with_ratings = []
-        # for car in list(Car.objects.values()):
-        #     rating = Rating.objects.get(Car=car['id'])
+        for car in Car.objects.all():
+            cars_with_ratings.append({
+                'id': car.id,
+                'make': car.make,
+                'model': car.model,
+                'avg_rating': car.avg_rating
+            })
 
-        #     avg_rating = avg_rating_of_rating(rating)
-
-        #     cars_with_ratings.append({
-        #         'id': car['id'],
-        #         'make': car['make'],
-        #         'model': car['model'],
-        #         'avg_rating': avg_rating
-        #     })
-        return 
-        from .serializers import CarSerializer, RatingSerializer, PopularCarSerializer
-        cars= Car.objects.all()
-        serializer = CarSerializer(cars, many=True) 
-        print(serializer.data)
-        return
-
-        for elem in wanted_response:
-            if elem['id'] in rate_trace:
-
-                avg_rating = rate_trace[elem['id']][0] / rate_trace[
-                    elem['id']][1]
-                elem['avg_rating'] = round(avg_rating, 1)
+        for elem in rate_trace:
+            avg_rating = rate_trace[elem]['sum'] / rate_trace[elem]['count']
+            wanted_response[elem - 1]['avg_rating'] = round(avg_rating, 1)
 
         self.assertEqual(cars_with_ratings, wanted_response)
 
-        print(
-            "\n ------------------I will check top popular cars------------ \n"
-        )
+    def test_popular_cars(self):
+        #python manage.py test myapp.tests.test_views.test_popular_cars
+        generate_random_database(self.sample)
+        wanted_response = retrive_wanted_response(self.sample)
+
+        if not wanted_response: return
+
+        rate_trace = rate_random_cars(
+            wanted_response,
+            self.max_number_of_randomly_generated_rates_per_car, self)
 
         top_cars = sorted(rate_trace.items(),
-                          key=lambda x: x[1][1],
+                          key=lambda x: x[1]['count'],
                           reverse=True)[:2]
 
         wanted_response_popular_cars = []
         for elem in top_cars:
             car = Car.objects.get(id=elem[0])
-            rating = Rating.objects.get(Car=car)
             wanted_response_popular_cars.append({
                 'id':
                 car.id,
@@ -227,7 +217,7 @@ class test_views(TestCase):
                 'model':
                 car.model,
                 'rates_number':
-                rating.rates_number
+                car.rates_number
             })
 
         response = self.client.generic('GET', '/popular/')
@@ -242,13 +232,13 @@ class test_views(TestCase):
             self.assertEqual(response[i]['rates_number'],
                              wanted_response_popular_cars[i]['rates_number'])
 
-    def test_adding_cars(self):
-        # python manage.py test myapp.tests.test_views.test_adding_cars
-        existing_car = json.dumps({"make": "Volkswagen", "model": "Golf"})
-        not_existing_car = json.dumps({"make": "Volkswagen", "model": "M3"})
+    # def test_adding_cars(self):
+    #     # python manage.py test myapp.tests.test_views.test_adding_cars
+    #     existing_car = json.dumps({"make": "Volkswagen", "model": "Golf"})
+    #     not_existing_car = json.dumps({"make": "Volkswagen", "model": "M3"})
 
-        response = self.client.generic('POST', '/cars/', existing_car)
-        self.assertEqual(response.status_code, 200)
+    #     response = self.client.generic('POST', '/cars/', existing_car)
+    #     self.assertEqual(response.status_code, 200)
 
-        response = self.client.generic('POST', '/cars/', not_existing_car)
-        self.assertEqual(response.status_code, 400)
+    #     response = self.client.generic('POST', '/cars/', not_existing_car)
+    #     self.assertEqual(response.status_code, 400)

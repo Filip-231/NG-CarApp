@@ -1,8 +1,9 @@
-import json
 from django.shortcuts import render
 from myapp.models import Car, Rating, Catalogue
 from rest_framework.response import Response
 from rest_framework import status
+import json
+
 
 
 
@@ -65,65 +66,3 @@ def car_in_database(func):
 
     return check_car_in_database
 
-# BASE_ERROR_MESSAGE = 'Could not connect to your box because {error_reason}'
-
-# def handle_view_exception(func):
-#     """Decorator for handling exceptions."""
-#     @functools.wraps(func)
-#     def wrapper(request):
-#         try:
-#             #response = func(request, *args, **kwargs)
-
-#             payload = json.loads(request.body)
-#             car_id = payload['car_id']
-#             cur_rating = payload['rating']
-#             response=func(request)
-#         except RequestException as e:
-#             response = [{'Error': 'Car could not be rated!'}]
-#             return Response(response,status=status.HTTP_400_BAD_REQUEST)
-#         return response
-
-#     return wrapper
-
-# from django.contrib.auth.decorators import user_passes_test
-
-# def teacher_required(function=None):
-#     def is_teacher(u):
-#         return False
-#     actual_decorator = user_passes_test(is_teacher)
-#     if function:
-#         return actual_decorator(function)
-#     else:
-#         return actual_decorator
-
-# class WrongType(Exception):
-#     pass
-
-# @dataclass
-# class ExceptionHandler:
-#     e: Exception
-#     @staticmethod
-#     def context_wrapper(code) -> dict:
-#         return {'error_code': code}
-# def get_error_response(self) -> Response:
-#         if False:#self.e.__class__ == WrongType:
-#             data = self.context_wrapper(101)
-#         else:
-#             data = self.context_wrapper(999)
-#         return Response(data, status=status.HTTP_200_OK
-
-# def exception(function):
-#     @wraps(function)
-#     def wrapper(*args, **kwargs):
-#         try:
-#             return function(*args, **kwargs)
-#         except Exception as e:
-#             return ExceptionHandler(e).get_error_response()
-#     return wrapper
-
-# @teacher_required
-# def teacher_view(request):
-#     # ...
-#     pass
-
-#from .decorators import handle_view_exception,teacher_required,
