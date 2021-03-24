@@ -7,7 +7,7 @@ import requests
 import random as r
 
 
-# python manage.py test myapp/
+
 
 def get_sample(test_makes_models):
     """Generating random ordered dict from given dict with test_makes_models"""
@@ -85,7 +85,7 @@ def rate_random_cars(wanted_response,
 class test_functions(TestCase):
     """
     Testing functions which creates views and updates ratings.
-
+    # python manage.py test myapp/
     """
     def setUp(self):
         self.make1 = "Volkswagen"
@@ -94,7 +94,7 @@ class test_functions(TestCase):
         self.model2 = "M5"
 
     def test_create(self):
-
+        #python manage.py test myapp.tests.test_functions.test_create
         create_car(self.make1, self.model1)
         create_car(self.make2, self.model2)
         car = Car.objects.get(model=self.model1)
@@ -232,13 +232,13 @@ class test_views(TestCase):
             self.assertEqual(response[i]['rates_number'],
                              wanted_response_popular_cars[i]['rates_number'])
 
-    # def test_adding_cars(self):
-    #     # python manage.py test myapp.tests.test_views.test_adding_cars
-    #     existing_car = json.dumps({"make": "Volkswagen", "model": "Golf"})
-    #     not_existing_car = json.dumps({"make": "Volkswagen", "model": "M3"})
+    def test_adding_cars(self):
+        # python manage.py test myapp.tests.test_views.test_adding_cars
+        existing_car = json.dumps({"make": "Volkswagen", "model": "Golf"})
+        not_existing_car = json.dumps({"make": "Volkswagen", "model": "M3"})
 
-    #     response = self.client.generic('POST', '/cars/', existing_car)
-    #     self.assertEqual(response.status_code, 200)
+        response = self.client.generic('POST', '/cars/', existing_car)
+        self.assertEqual(response.status_code, 200)
 
-    #     response = self.client.generic('POST', '/cars/', not_existing_car)
-    #     self.assertEqual(response.status_code, 400)
+        response = self.client.generic('POST', '/cars/', not_existing_car)
+        self.assertEqual(response.status_code, 400)
