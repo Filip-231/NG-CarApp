@@ -71,8 +71,8 @@ Car:
   
 Rating:  
     Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)  
-    rates_number = models.IntegerField(blank=True, null=True)  
-    rates_sum = models.IntegerField(blank=True, null=True)  
+    value = models.IntegerField(blank=True, null=True)  
+I decided to create new rating card for each rate, after scalling up application to be used for multiply users, they would can remove / update each rating.    
 
 Catalogue:  
     make=models.CharField(max_length=100)  
