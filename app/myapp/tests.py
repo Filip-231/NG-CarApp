@@ -7,12 +7,10 @@ import requests
 import random as r
 
 
-
-
 def get_sample(test_makes_models):
     """Generating random ordered dict from given dict with test_makes_models"""
     order_input = OrderedDict()
-    
+
     i = r.randint(0, len(test_makes_models))
     for make in r.sample(test_makes_models.keys(), i):
         models = test_makes_models[make]
@@ -20,7 +18,7 @@ def get_sample(test_makes_models):
 
         if models:
             order_input[make] = models
-            
+
     return order_input
 
 
@@ -90,7 +88,7 @@ class test_functions(TestCase):
     def setUp(self):
         self.make1 = "Volkswagen"
         self.model1 = "Golf"
-        self.make2 = "BMW"  
+        self.make2 = "BMW"
         self.model2 = "M5"
 
     def test_create(self):
@@ -132,7 +130,7 @@ class test_views(TestCase):
         # self.test_makes_models={"Volkswagen": {'Euro Van', 'ID.4', 'New Jetta'},\
         #            "Honda": {'HR-V', 'NC700XDL/NC700X', 'ST1300'},\
         #            "BMW":{'K1', '535i/535is'}}
-        
+
         self.sample = get_sample(self.test_makes_models)
         self.max_number_of_randomly_generated_rates_per_car = r.randint(0, 200)
 
@@ -150,16 +148,15 @@ class test_views(TestCase):
 
     def test_deleting_car(self):
         # python manage.py test myapp.tests.test_views.test_deleting_car
-        car_id=create_car("Volkswagen", "Golf")
-        response = self.client.generic(
-            'DELETE', '/cars/{}/'.format(car_id)) 
+        car_id = create_car("Volkswagen", "Golf")
+        response = self.client.generic('DELETE', '/cars/{}/'.format(car_id))
         self.assertEqual(response.status_code, 200)
         print(response.content)
 
     def test_rating_car(self):
         # python manage.py test myapp.tests.test_views.test_rating_car
-        car_id=create_car("Volkswagen", "Golf")
-        rate_message = json.dumps({"car_id": 1, "rating": car_id})  
+        car_id = create_car("Volkswagen", "Golf")
+        rate_message = json.dumps({"car_id": 1, "rating": car_id})
         response = self.client.generic('POST', '/rate/', rate_message)
         self.assertEqual(response.status_code, 200)
         print(response.content)

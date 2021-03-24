@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-
 from django.db.models import Count
 from myapp.models import Car, Rating, Catalogue
 from rest_framework.decorators import APIView
