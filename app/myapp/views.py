@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+
 from django.db.models import Count
 from myapp.models import Car, Rating, Catalogue
 from rest_framework.decorators import APIView
@@ -50,7 +50,7 @@ class RatingListView(APIView):
 
 
 class PopularListView(APIView):
-    def get(self, request,num_popular_cars = 2):
+    def get(self, request, num_popular_cars=2):
 
         cars = Car.objects.all() \
                 .annotate(num_rating=Count('rating')) \
@@ -99,14 +99,16 @@ def create_car(make, model):
 
 def update_rating(car_id, cur_rating):
     """ updating rating of car with id by cur_rating"""
-    car=Car.objects.get(id=car_id)
-    rating=Rating(Car=car,value=cur_rating)
+    car = Car.objects.get(id=car_id)
+    rating = Rating(Car=car, value=cur_rating)
     rating.save()
 
-def check_car(make, model,num_attempts = 5):
+
+def check_car(make, model, num_attempts=5):
     """Checking in downloaded or online catalogue form page: https://vpic.nhtsa.dot.gov/api/ if car exists"""
 
-    url = "https://vpic.nhtsa.dot.gov/api//vehicles/GetModelsForMake/{}?format=json".format(make)
+    url = "https://vpic.nhtsa.dot.gov/api//vehicles/GetModelsForMake/{}?format=json".format(
+        make)
     try:
         data = Catalogue.objects.get(make=make.lower())
         print("You checked that make already!")
@@ -122,7 +124,7 @@ def check_car(make, model,num_attempts = 5):
             except:
                 print("Trying one more..")
                 pass
-            
+
             num_attempts = num_attempts - 1
             if (num_attempts == 0):
                 return False
