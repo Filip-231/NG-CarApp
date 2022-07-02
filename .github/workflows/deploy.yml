@@ -1,13 +1,13 @@
-name: Deploy
+name: Deploy Staging
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: Deploy
+    name: Deploy Staging
     runs-on: ubuntu-latest
     steps:
-      - name: ls -a via ssh
+      - name: Deploy Staging
         uses: fifsky/ssh-action@master
         with:
           command: |
