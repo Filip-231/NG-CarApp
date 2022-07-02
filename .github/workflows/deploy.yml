@@ -14,7 +14,7 @@ jobs:
             ls -la
             whoami
             ls -a
-            cd home/deploy/
+            cd deploy/
             git clone git@github.com:Filip-231/NG-CarApp.git
             git fetch --all
             ls -la
