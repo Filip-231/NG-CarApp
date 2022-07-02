@@ -15,6 +15,9 @@ jobs:
             whoami
             cd /tmp
             ls -a
+            cd home/deploy/
+            git fetch --all
+            ls -la
             sudo docker-compose build
             sudo docker-compose up
           host: ${{ secrets.STAGING_HOST }}
