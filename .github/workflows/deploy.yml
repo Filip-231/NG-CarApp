@@ -16,6 +16,7 @@ jobs:
             ls -a
             cd deploy/
             git clone git@github.com:Filip-231/NG-CarApp.git
+            cd NG-CarApp/
             git fetch --all
             ls -la
             sudo docker-compose build
