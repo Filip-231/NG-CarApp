@@ -15,6 +15,8 @@ jobs:
             sudo rm -rf NG-CarApp/
             git clone git@github.com:Filip-231/NG-CarApp.git
             cd NG-CarApp/
+            sudo docker-compose down
+            sudo docker system prune --volumes
             sudo docker-compose build
             sudo docker-compose up -d
           host: ${{ secrets.STAGING_HOST }}
