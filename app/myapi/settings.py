@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
-SECRET_KEY="__)_a!y%wak@n!ie!qu$w8)sfgp(8q(!7%=zm+x9(oo6w%dvn("
+# SECRET_KEY=""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
@@ -30,7 +30,7 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 #DEBUG=1 #for running with "python manage.py runserver"
 
 
-ALLOWED_HOSTS = ["0.0.0.0","129.146.245.21"]
+ALLOWED_HOSTS = []
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
