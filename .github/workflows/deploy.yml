@@ -1,0 +1,22 @@
+name: Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            ls -la
+            whoami
+            cd /tmp
+            ls -a
+            sudo docker-compose build
+            sudo docker-compose up
+          host: ${{ secrets.STAGING_HOST }}
+          user: ubuntu
+          key: ${{ secrets.STAGING_KEY}}
