@@ -30,6 +30,3 @@ jobs:
           host: ${{ secrets.STAGING_HOST }}
           user: ubuntu
           key: ${{ secrets.STAGING_KEY}}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          TEST: ${{ secrets.TEST }}
