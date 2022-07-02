@@ -13,9 +13,9 @@ jobs:
           command: |
             ls -la
             whoami
-            cd /tmp
             ls -a
             cd home/deploy/
+            git clone git@github.com:Filip-231/NG-CarApp.git
             git fetch --all
             ls -la
             sudo docker-compose build
