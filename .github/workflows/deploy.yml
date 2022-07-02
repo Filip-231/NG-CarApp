@@ -11,14 +11,6 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            export TEST=${{ secrets.TEST }}
-            export ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
-            export SECRET_KEY=${{ secrets.SECRET_KEY }}
-            echo "-------------"
-            echo ${{ secrets.TEST }}
-            echo "$TEST"
-            echo "$ALLOWED_HOSTS"
-            echo "--------------"
             cd deploy/
             sudo rm -rf NG-CarApp/
             git clone git@github.com:Filip-231/NG-CarApp.git
