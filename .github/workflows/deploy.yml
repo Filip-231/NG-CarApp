@@ -11,9 +11,10 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
+            export TEST=${{ secrets.TEST }}
             echo "-------------"
             echo ${{ secrets.TEST }}
-            echo "$ALLOWED_HOSTS"
+            echo "$TEST"
             echo "--------------"
             cd deploy/
             sudo rm -rf NG-CarApp/
