@@ -26,7 +26,7 @@ jobs:
             sudo docker-compose down
             yes | sudo docker system prune --volumes
             sudo docker-compose build
-            sudo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} docker-compose up -d
+            sudo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} SECRET_KEY=${{ secrets.SECRET_KEY }} docker-compose up -d
           host: ${{ secrets.STAGING_HOST }}
           user: ubuntu
           key: ${{ secrets.STAGING_KEY}}
