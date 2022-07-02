@@ -12,7 +12,7 @@ jobs:
         with:
           command: |
             echo "-------------"
-            echo "$TEST"
+            echo ${{ secrets.TEST }}
             echo "$ALLOWED_HOSTS"
             echo "--------------"
             cd deploy/
