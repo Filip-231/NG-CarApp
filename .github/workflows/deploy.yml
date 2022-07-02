@@ -12,6 +12,8 @@ jobs:
         with:
           command: |
             cd deploy/
+            export ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
+            export SECRET_KEY=${{ secrets.SECRET_KEY }}
             sudo rm -rf NG-CarApp/
             git clone git@github.com:Filip-231/NG-CarApp.git
             cd NG-CarApp/
