@@ -6,10 +6,6 @@ jobs:
   build:
     name: Deploy Staging
     runs-on: ubuntu-latest
-    env:
-      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      TEST: ${{ secrets.TEST }}
     steps:
       - name: Deploy Staging
         uses: fifsky/ssh-action@master
@@ -17,6 +13,7 @@ jobs:
           command: |
             echo "-------------"
             echo "$TEST"
+            echo "$ALLOWED_HOSTS"
             echo "--------------"
             cd deploy/
             sudo rm -rf NG-CarApp/
@@ -29,3 +26,6 @@ jobs:
           host: ${{ secrets.STAGING_HOST }}
           user: ubuntu
           key: ${{ secrets.STAGING_KEY}}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          TEST: ${{ secrets.TEST }}
