@@ -6,14 +6,17 @@ jobs:
   build:
     name: Deploy Staging
     runs-on: ubuntu-latest
+    env:
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      TEST: ${{ secrets.TEST }}
     steps:
       - name: Deploy Staging
         uses: fifsky/ssh-action@master
         with:
           command: |
+            echo "$TEST"
             cd deploy/
-            export ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
-            export SECRET_KEY=${{ secrets.SECRET_KEY }}
             sudo rm -rf NG-CarApp/
             git clone git@github.com:Filip-231/NG-CarApp.git
             cd NG-CarApp/
