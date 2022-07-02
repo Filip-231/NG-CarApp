@@ -11,16 +11,12 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            ls -la
-            whoami
-            ls -a
             cd deploy/
+            sudo rm -rf NG-CarApp/
             git clone git@github.com:Filip-231/NG-CarApp.git
             cd NG-CarApp/
-            git fetch --all
-            ls -la
             sudo docker-compose build
-            sudo docker-compose up
+            sudo docker-compose up -d
           host: ${{ secrets.STAGING_HOST }}
           user: ubuntu
           key: ${{ secrets.STAGING_KEY}}
