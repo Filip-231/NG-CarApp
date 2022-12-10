@@ -1,6 +1,9 @@
 # Django REST API 
-Simple API which allow to add/delete/update the car to database if it exists in online external catalogue, 
+REST API to add, delete, update and rate the car if it exists in external online catalogue, 
 the car can be rated and all information can be viewed.
+
+There is a configuration which allow serving static files using `NginX` and `/help` page with documented all of the enpoints.
+
 ![Demo](Demo-NG-CarApp.gif)
 
 ## Description
@@ -48,7 +51,7 @@ App was deployed and maintained on AWS cloud services EC2:
 
 Pass this link without: `https://`  
 
-Page with all possible endpoints and documentations: `help/`    
+Page with all endpoints and documentation: `help/`    
 
 ## Environment
 
