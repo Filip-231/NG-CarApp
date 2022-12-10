@@ -1,47 +1,49 @@
-Simple Api using Django framework, containing database with Car and Rating models.    
+# Django REST API 
+database with Car and Rating models.    
 
-Link to public host:  
-	ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080    
+App was deployed and maintained on AWS cloud services EC2:  
+	`ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080`    
 
 Remember pass this link without: "https://"  
 
-For available paths go to: 'help/'    
+Main page:  `'help/'`    
 
------------------------------------RUNNING APP locally--------------------------------------  
-
-To run it locally for debug mode:   
-git clone <this-repository>  
-sudo docker-compose build  
-sudo docker-compose up    
-
-
-To run locally deployment version using files:  
-git clone <this-repository>  
-sudo docker-compose -f docker-compose-deploy.yml build  
-sudo docker-compose -f docker-compose-deploy.yml up  
-
-Warning: In this case you need to set locally environment variables:  
+## Environment:
 - SECRET_KEY= #random key  
 - ALLOWED_HOSTS= #hosts which uses this application (localhost)  
 
 
-To pull deployment version directly from my dockerhub account:  
+## Run the application locally
+
+### Debug mode:   
+```
+git clone git@github.com:Filip-231/NG-CarApp.git 
+sudo docker-compose build  
+sudo docker-compose up    
+```
+
+
+### Run deployment version:  
+```
+git clone git@github.com:Filip-231/NG-CarApp.git
+sudo docker-compose -f docker-compose-deploy.yml build  
+sudo docker-compose -f docker-compose-deploy.yml up  
+```
+
+### Pull deployment version directly from ***DockerHub*** account:  
+```
 download docker-compose-deploy-from-dockerhub.yml  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up  
-
-Warning: In that case you need to set locally environment variables:  
-- SECRET_KEY= #random key  
-- ALLOWED_HOSTS= #hosts which uses application  
+```
 
 
 App is using nginx as proxy:    
+- container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi  
+- container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy    
   
-container with app: https://hub.docker.com/repository/docker/filip231/projectmyapi  
-container with proxy: https://hub.docker.com/repository/docker/filip231/projectproxy    
-  
-To run for debug mode using virtual env:  
-
+Debug mode Django configuration:  
+```
 	python -m venv env
 
 	source env/bin/activate
@@ -53,7 +55,7 @@ To run for debug mode using virtual env:
 	python manage.py test myapp/ #for tests
 
 	python manage.py runserver
-	
+```	
 	
 
 For running with command "python manage.py runserver", remember to add in file: "app/myapi/settings.py" option DEBUG=1.  
@@ -61,7 +63,7 @@ This app is prepared for deployment.
 I added DEBUG=1 to environment values in docker-compose.yml file.  
 To run it via python manage.py runserver that value need to be set.  
 
-----------------------------------------Short description---------------------------------------  
+# Description
 Application containing models of Cars and Ratings.  
 
 Car:  
