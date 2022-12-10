@@ -1,6 +1,6 @@
 # Django REST API 
-REST API to add, delete, update the car information if it exists in external online catalogue, 
-the car can be rated and all information can be viewed.
+REST API to add, delete, update the car information if it exists in external online catalogue.
+The car can be rated and all information can be viewed and manage.
 
 There is a configuration which allow serving static files using `NginX` and `/help` page with documented all of the enpoints.
 
