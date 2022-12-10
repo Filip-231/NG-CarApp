@@ -7,12 +7,12 @@ the car can be rated and all information can be viewed.
 Database contain models of Cars and Ratings.  
 
 - Car:  
-    - make = models.CharField(max_length=100)  
-    - model = models.CharField(max_length=100)  
+    - make - make name, string field
+    - model - model name, string field
   
 - Rating:  
-    - Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)  
-    - value = models.IntegerField(blank=True, null=True)  
+    - Car - car object foregin key relation, cascade delete   
+    - value - rating value, integer field  
  
 New rating card will be created after each rate.
 This allows to easy remove or update posted rating.    
