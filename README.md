@@ -1,6 +1,20 @@
 # Django REST API 
-Simple API which allow to add the car to database if it exists in online catalogue, 
+Simple API which allow to add/delete/update the car to database if it exists in online external catalogue, 
 the car can be rated and all information can be viewed.
+
+## Technologies
+- django
+- rest_framework
+- django tests
+- serializers
+- SQLite
+- requests
+- random
+- docker
+- docker-compose
+- AWS
+- NginX
+- UWSGI
 
 App was deployed and maintained on AWS cloud services EC2: `ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080`    
 Pass this link without: `https://`  
