@@ -1,6 +1,7 @@
 # Django REST API 
 Simple API which allow to add/delete/update the car to database if it exists in online external catalogue, 
 the car can be rated and all information can be viewed.
+![Demo](Demo-NG-CarApp.gif)
 
 ## Description
 Database contain models of Cars and Ratings.  
