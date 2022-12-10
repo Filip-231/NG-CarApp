@@ -42,7 +42,10 @@ If the online car API would be changed, I would need to refresh the database sta
 - NginX
 - UWSGI
 
-App was deployed and maintained on AWS cloud services EC2: `ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080`    
+App was deployed and maintained on AWS cloud services EC2:  
+
+`ec2-54-246-230-82.eu-west-1.compute.amazonaws.com:8080`    
+
 Pass this link without: `https://`  
 
 Page with all possible endpoints and documentations: `help/`    
