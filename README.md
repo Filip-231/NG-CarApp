@@ -13,8 +13,8 @@ Database contain models of Cars and Ratings.
     - Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)  
     - value = models.IntegerField(blank=True, null=True)  
  
-I decided to create new rating card for after each rate.
-If there would be multiply users, they would be able to remove/update posted rating.    
+New rating card will be created after each rate.
+This allows to easy remove or update posted rating.    
 
 - Catalogue:  
    - make=models.CharField(max_length=100)  
