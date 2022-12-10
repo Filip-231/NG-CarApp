@@ -2,6 +2,31 @@
 Simple API which allow to add/delete/update the car to database if it exists in online external catalogue, 
 the car can be rated and all information can be viewed.
 
+## Description
+Database contain models of Cars and Ratings.  
+
+- Car:  
+    - make = models.CharField(max_length=100)  
+    - model = models.CharField(max_length=100)  
+  
+- Rating:  
+    - Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)  
+    - value = models.IntegerField(blank=True, null=True)  
+ 
+I decided to create new rating card for after each rate.
+If there would be multiply users, they would be able to remove/update posted rating.    
+
+- Catalogue:  
+   - make=models.CharField(max_length=100)  
+   - available_models=models.CharField(max_length=10000)  
+
+My App can only add the car to database if it exist in API catalogue.
+After the first successful check if model exist, for the specific make, it is saved to database.   
+That ruduce time spending for requesting the same endpoint for the same data.  
+If later the same model will be added, instead of requesting car API, I check it in my database.  
+If the online car API would be changed, I would need to refresh the database status.  
+
+
 ## Technologies
 - django
 - rest_framework
@@ -29,7 +54,7 @@ Page with all possible endpoints and documentations: `help/`
 | ALLOWED_HOSTS            | Host of this app               |  0.0.0.0                   |
 
 
-# How to run
+## How to run
 
 ### Debug mode:   
 ```
@@ -75,29 +100,6 @@ python manage.py runserver
 When starting with `python manage.py runserver`, add to file: `app/myapi/settings.py` option `DEBUG=1`.  
 This app is prepared for deployment `DEBUG=1` is exported to environment values in docker-compose.yml file.  
 
-# Description
-Database contain models of Cars and Ratings.  
-
-- Car:  
-    - make = models.CharField(max_length=100)  
-    - model = models.CharField(max_length=100)  
-  
-- Rating:  
-    - Car = models.ForeignKey(Car, blank=True, null=True,on_delete=models.CASCADE)  
-    - value = models.IntegerField(blank=True, null=True)  
- 
-I decided to create new rating card for after each rate.
-If there would be multiply users, they would be able to remove/update posted rating.    
-
-- Catalogue:  
-   - make=models.CharField(max_length=100)  
-   - available_models=models.CharField(max_length=10000)  
-
-My App can only add the car to database if it exist in API catalogue.
-After the first successful check if model exist, for the specific make, it is saved to database.   
-That ruduce time spending for requesting the same endpoint for the same data.  
-If later the same model will be added, instead of requesting car API, I check it in my database.  
-If the online car API would be changed, I would need to refresh the database status.  
 
 
 
