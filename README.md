@@ -87,7 +87,7 @@ Database contain models of Cars and Ratings.
     - value = models.IntegerField(blank=True, null=True)  
  
 I decided to create new rating card for after each rate.
-After scalling up this application to manage access of multiply users, they would be able to remove / update posted rating.    
+If there would be multiply users, they would be able to remove/update posted rating.    
 
 - Catalogue:  
    - make=models.CharField(max_length=100)  
