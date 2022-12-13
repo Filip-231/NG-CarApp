@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "",
+		"name": "Cars API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic task",
+			"item": [
+				{
+					"name": "Add car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\":\"bmw\",\n    \"model\":\"m2\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}cars/",
+							"host": [
+								"{{URL}}cars"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Adding car to database."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete car with id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}cars/21/",
+							"host": [
+								"{{URL}}cars"
+							],
+							"path": [
+								"21",
+								""
+							]
+						},
+						"description": "Deleting car from database."
+					},
+					"response": []
+				},
+				{
+					"name": "Rate car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"car_id\":24,\n    \"rating\":1\n}"
+						},
+						"url": {
+							"raw": "{{URL}}rate/",
+							"host": [
+								"{{URL}}rate"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Adding rating to car with id."
+					},
+					"response": []
+				},
+				{
+					"name": "List cars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}cars/",
+							"host": [
+								"{{URL}}cars"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "List every car in database with their current average rate."
+					},
+					"response": []
+				},
+				{
+					"name": "Popular",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}popular/",
+							"host": [
+								"{{URL}}popular"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Get most popular cars in database"
+					},
+					"response": []
+				}
+			],
+			"description": "Basic task queries.\n"
+		},
+		{
+			"name": "Additional",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}",
+							"host": [
+								"{{URL}}"
+							]
+						},
+						"description": "Hello page."
+					},
+					"response": []
+				},
+				{
+					"name": "Catalogue list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}raw/catalogue/",
+							"host": [
+								"{{URL}}raw"
+							],
+							"path": [
+								"catalogue",
+								""
+							]
+						},
+						"description": "Listing already downloaded catalogue."
+					},
+					"response": []
+				},
+				{
+					"name": "Ratings list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}rate/",
+							"host": [
+								"{{URL}}rate"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "List all ratings in database."
+					},
+					"response": []
+				},
+				{
+					"name": "Help",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}help/",
+							"host": [
+								"{{URL}}help"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Help page with all queries."
+					},
+					"response": []
+				}
+			],
+			"description": "Additional queries."
+		}
+	]
+}
