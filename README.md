@@ -1,8 +1,8 @@
 # Django REST API 
-REST API to add, delete, update the car information if it exists in external online catalogue.
-The car can be rated and all information can be viewed and manage.
+REST API which allow adding, deleting, updating the car information, if it exists in external online catalogue.
+The car can be rated and all information can be viewed.
 
-There is a configuration which allow serving static files using `NginX` and `/help` page with documented all of the enpoints.
+Serving static files is possible using `NginX` and there is a `/help` page with documented endpoints.
 
 ![Demo](documentation/Demo-NG-CarApp.gif)
 
@@ -24,7 +24,7 @@ Database contain models of Cars and Ratings.
     - model - model name, string field
   
 - Rating:  
-    - Car - car object foregin key relation, cascade delete   
+    - Car - car object foreign key relation, cascade delete   
     - value - rating value, integer field  
  
 New rating card will be created after each rate.
@@ -34,9 +34,9 @@ This allows to easy remove or update posted rating.
    - make - cached make
    - available_models - cached models for a given make 
 
-My App can only add the car to database if it exist in API catalogue.
+My App can only add the car to database if it exists in API catalogue.
 After the first successful check if model exist, for the specific make, it is saved to database.   
-That ruduce time spending for requesting the same endpoint for the same data.  
+That reduce time spending for requesting the same endpoint for the same data.  
 If later the same model will be added, instead of requesting car API, I check it in my database.  
 If the online car API would be changed, I would need to refresh the database status.  
 
