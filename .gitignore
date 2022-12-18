@@ -9,3 +9,5 @@ app/myapp/__pycache__/
 app/myapi/__pycache__/
 app/myapp/viewsraw.py
 notes/
+*/db.sqlite3
+.idea/

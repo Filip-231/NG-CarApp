@@ -4,7 +4,7 @@ The car can be rated and all information can be viewed and manage.
 
 There is a configuration which allow serving static files using `NginX` and `/help` page with documented all of the enpoints.
 
-![Demo](Demo-NG-CarApp.gif)
+![Demo](documentation/Demo-NG-CarApp.gif)
 
 ## Table of contents
   - [Description](#description)
@@ -88,14 +88,14 @@ sudo docker-compose -f docker-compose-deploy.yml build
 sudo docker-compose -f docker-compose-deploy.yml up  
 ```
 
-### Pull production version directly from ***DockerHub*** account:  
+### Pull production version directly from ***DockerHub***:  
 ```
 download docker-compose-deploy-from-dockerhub.yml  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml pull  
 sudo docker-compose -f docker-compose-deploy-from-dockerhub.yml up  
 ```
 
-App is using nginx as proxy:    
+App is using NginX as proxy. Images are pushed to **docker hub**:     
 - [container with app](https://hub.docker.com/repository/docker/filip231/projectmyapi)  
 - [container with proxy](https://hub.docker.com/repository/docker/filip231/projectproxy)
   
@@ -112,10 +112,10 @@ pip install -r requirements.txt
 python manage.py test myapp/ #for tests
 
 python manage.py runserver
-```	
+```
 	
-When starting with `python manage.py runserver`, add to file: `app/myapi/settings.py` option `DEBUG=1`.  
-This app is prepared for deployment `DEBUG=1` is exported to environment values in docker-compose.yml file.  
+When run with `python manage.py runserver`, add to file: `app/myapi/settings.py` option `DEBUG=1` to turn on debugging mode. 
+Using local configuration from docker-compose.yml, `DEBUG=1` is exported to environment values.  
 
 # Documentation Cars API
 ## 📁 Collection Cars management
